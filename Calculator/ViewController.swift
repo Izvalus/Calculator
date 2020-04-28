@@ -10,12 +10,15 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-    @IBOutlet var keyboard: [UIButton]! {
+    @IBOutlet
+    var keyboard: [UIButton]! {
         didSet {
             keyboard.forEach { $0.layer.cornerRadius = 20 }
         }
     }
-    @IBOutlet var displayResultLabel: UILabel!
+    
+    @IBOutlet
+    var displayResultLabel: UILabel!
     
     var stillTyping: Bool = false
     var firstOperand: Double = 0
@@ -30,8 +33,9 @@ final class ViewController: UIViewController {
         set {
             let value = "\(newValue)"
             let valueArray = value.components(separatedBy: ".")
-            if valueArray[1] == "0" {
-                displayResultLabel.text = ("\(valueArray[0])")
+            if let firstValue = valueArray.first,
+                firstValue == "0" {
+                displayResultLabel.text = ("\(firstValue)")
             } else {
                 displayResultLabel.text = "\(newValue)"
             }
@@ -65,14 +69,12 @@ final class ViewController: UIViewController {
     }
     
     
-    @IBAction func equalitySignPressed(_ sender: UIButton) {
-        
+    @IBAction
+    func equalitySignPressed(_ sender: UIButton) {
         if stillTyping {
             secondOperand = currentInput
         }
-        
         dotIsPlaced = false
-        
         switch operationSign {
         case "+": operateWithTwoOperands{$0 + $1}
         case "-": operateWithTwoOperands{$0 - $1}
@@ -108,11 +110,13 @@ final class ViewController: UIViewController {
         stillTyping = false
     }
     
-    @IBAction func squareRootButtonPressed(_ sender: UIButton) {
+    @IBAction
+    func squareRootButtonPressed(_ sender: UIButton) {
         currentInput = sqrt(currentInput)
     }
     
-    @IBAction func dotButtonPressed(_ sender: UIButton) {
+    @IBAction
+    func dotButtonPressed(_ sender: UIButton) {
         if stillTyping && dotIsPlaced == false {
             displayResultLabel.text = (displayResultLabel.text ?? "") + "."
             dotIsPlaced = true
